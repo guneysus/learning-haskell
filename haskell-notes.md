@@ -374,4 +374,364 @@ addThree x y z = x + y + z
 
 factorial :: Integer -> Integer  
 factorial n = product [1..n] 
+
+circumference :: Float -> Float  
+circumference r = 2 * pi * r  
 ```
+
+
+## Type Classes
+
+```
+Prelude> :t (==)
+(==) :: Eq a => a -> a -> Bool
+```
+
+Interesting. We see a new thing here, the `=>` symbol. Everything before the `=>` symbol is called a class constraint. 
+We can read the previous type declaration like this: **the equality function takes any two values that are of the same type and returns a `Bool`**. 
+**The type of those two values must be a member of the `Eq` class** (this was the class constraint).
+
+The `Eq` typeclass *provides an interface for testing for equality*. Any type where it makes sense to test for equality between two values of that type should be a member of the Eq class. **All standard Haskell types except for IO and functions are a part of the Eq typeclass.**
+
+The `elem` function has a type of `(Eq a) => a -> [a] -> Bool` because it uses == over a list to check whether some value we're looking for is in it.
+
+
+
+```hs
+Prelude> :t elem
+elem :: (Foldable t, Eq a) => a -> t a -> Bool
+```
+
+`Ord` is for types that have an ordering.
+
+```hs
+Prelude> :t (>)
+(>) :: Ord a => a -> a -> Bool
+```
+
+All the types we covered so far except for functions are part of Ord. Ord covers all the standard comparing functions such as `>`, `<`, `>=` and `<=`. The compare function takes two `Ord` members of the same type and returns an ordering. Ordering is a type that can be `GT`, `LT` or `EQ`, meaning greater than, lesser than and equal, respectively.
+
+```hs
+Prelude> :t GT
+GT :: Ordering
+Prelude> :t LT
+LT :: Ordering
+Prelude> :t EQ
+EQ :: Ordering
+
+Prelude> "Abrakadabra" < "Zebra"
+True
+
+Prelude> compare "ada" "fortran"
+LT
+
+Prelude> "ada" `compare` "fortran"
+LT
+
+```
+
+### Show
+
+```hs
+Prelude> :t show
+show :: Show a => a -> String
+
+Prelude> show 3
+"3"
+
+Prelude> show (1/5)
+"0.2"
+```
+
+### Read
+
+`Read` is sort of the opposite typeclass of `Show`. The read function takes a string and returns a type which is a member of Read.
+
+
+```hs
+Prelude> read "True" || False
+True
+
+Prelude> read "8.2" + 3.8
+12.0
+
+Prelude> read "[1,2,3,4]" ++ [3]
+[1,2,3,4,3]
+```
+
+```hs
+Prelude> :t read
+read :: Read a => String -> a
+```
+
+See? It returns a type that's part of `Read` but if we don't try to use it in some way later, it has no way of knowing which type. That's why we can use explicit **type annotations**. Type annotations are a way of explicitly saying what the type of an expression should be. We do that by adding `::` at the end of the expression and then specifying a type. Observe:
+
+```hs
+Prelude> read "5" :: Int
+5
+
+Prelude> read "5" :: Float
+5.0
+
+Prelude> read "5" :: Double
+5.0
+
+Prelude> read "[1,2,3,4]" :: [Int]
+[1,2,3,4]
+
+Prelude> read "[1,2,3,4]" :: [Float]
+[1.0,2.0,3.0,4.0]
+
+Prelude> read "(3, 'a')" :: (Int, Char)
+(3,'a')
+
+Prelude> read "(3, \"a\")" :: (Int, String)
+(3,"a")
+
+```
+
+
+### Enum
+Enum members are sequentially ordered types — they can be enumerated. The main advantage of the Enum typeclass is that we can use its types in list ranges. They also have defined successors and predecesors, which you can get with the `succ` and `pred` functions. Types in this class: `()`, `Bool`, `Char`, `Ordering`, `Int`, `Integer`, `Float` and Double.
+
+
+```hs
+Prelude> ['a'..'h']
+"abcdefgh"
+
+Prelude> :t ['a'..'h']
+['a'..'h'] :: [Char]
+
+Prelude> ['a'..'h'] :: String
+"abcdefgh"
+
+Prelude> :t (['a'..'h'] :: String)
+(['a'..'h'] :: String) :: String
+
+```
+
+### Bounded
+
+`Bounded` members have an upper and a lower bound.
+
+
+```hs
+Prelude> minBound :: Int
+-9223372036854775808
+
+Prelude> minBound :: Char
+'\NUL'
+
+Prelude> minBound :: Bool
+False
+
+Prelude> maxBound :: Bool
+True
+
+Prelude> maxBound :: Char
+'\1114111'
+
+Prelude> maxBound :: Int
+9223372036854775807
+
+Prelude> :t minBound
+minBound :: Bounded a => a
+
+Prelude> maxBound :: (Bool, Int, Char)
+(True,9223372036854775807,'\1114111')
+
+```
+
+## Num
+
+- Int
+- Integer
+- Float
+- Double
+
+
+```hs
+Prelude> 20 :: Int
+20
+Prelude> 20 :: Integer
+20
+Prelude> 20 :: Float
+20.0
+Prelude> 20 :: Double
+20.0
+```
+
+```hs
+Prelude> :t (*)
+(*) :: Num a => a -> a -> a
+
+Prelude> :t (-)
+(-) :: Num a => a -> a -> a
+
+Prelude> :t (/)
+(/) :: Fractional a => a -> a -> a
+
+Prelude> :t (+)
+(+) :: Num a => a -> a -> a
+```
+
+It takes two numbers of the same type and returns a number of that type. That's why `(5 :: Int) * (6 :: Integer)` will result in a type error whereas `5 * (6 :: Integer)` will work just fine and produce an Integer because **5 can act like an Integer or an Int.**
+
+
+```hs
+Prelude> :t (3 + 5.0)
+(3 + 5.0) :: Fractional a => a
+```
+
+## Integral
+
+`Integral` is also a numeric typeclass. `Num` includes all numbers, including real numbers and integral numbers, `Integral` includes only integral (whole) numbers. In this typeclass are `Int` and `Integer`.
+
+## Floating
+`Floating` includes only floating point numbers, so `Float` and `Double`.
+
+
+A very useful function for dealing with numbers is fromIntegral. It has a type declaration of `fromIntegral :: (Num b, Integral a) => a -> b`. From its type signature we see that it takes an integral number and **turns it into a more general number**. That's useful when you want **integral and floating point types to work together nicely**. For instance, the length function has a type declaration of `length :: [a] -> Int` instead of having a more general type of `(Num b) => length :: [a] -> b`. I think that's there for historical reasons or something, although in my opinion, it's pretty stupid. Anyway, if we try to get a length of a list and then add it to `3.2`, we'll get an error because we tried to add together an `Int` and a floating point number. So to get around this, we do `fromIntegral (length [1,2,3,4]) + 3.2` and it all works out.
+
+
+# Syntax in Functions
+
+```hs
+Prelude> lucky 7 = "LUCKY NUMBER SEVEN!"
+Prelude> lucky x = "Sorry, you're out of luck, pal!"
+Prelude> lucky 8
+"Sorry, you're out of luck, pal!"
+Prelude> lucky 7
+"Sorry, you're out of luck, pal!"
+```
+
+
+```hs
+Prelude> sayMe 1 = "One!"
+Prelude> sayMe 2 = "Two!"
+Prelude> sayMe 3 = "Three!"
+Prelude> sayMe 4 = "Four!"
+Prelude> sayMe 5 = "Five!"
+Prelude> sayMe x = "Not between 1 and 5"
+Prelude> sayMe 1
+"Not between 1 and 5"
+```
+
+Note that if we moved the last pattern (the catch-all one) to the top, it would always say "Not between 1 and 5", because it would catch all the numbers and they wouldn't have a chance to fall through and be checked for any other patterns.
+
+```hs
+*Main> charName 'a'
+"Albert"
+*Main> charName 'd'
+"*** Exception: factorial.hs:(18,1)-(20,22): Non-exhaustive patterns in function charName
+```
+
+## Pattern Matching on Tuples
+
+```hs
+addVectors :: (Num a) => (a, a) -> (a, a) -> (a, a)  
+addVectors a b = (fst a + fst b, snd a + snd b)  
+```
+
+Better way:
+
+```hs
+addVectors :: (Num a) => (a, a) -> (a, a) -> (a, a)  
+addVectors (x1, y1) (x2, y2) = (x1 + x2, y1 + y2)  
+```
+
+`fst` and `snd` extract the components of pairs. But what about triples? Well, there are no provided functions that do that but we can make our own.
+
+```hs
+first :: (a, b, c) -> a  
+first (x, _, _) = x  
+  
+second :: (a, b, c) -> b  
+second (_, y, _) = y  
+  
+third :: (a, b, c) -> c  
+third (_, _, z) = z  
+```
+
+```hs
+*Main> let xs = [(1,3), (4,3), (2,4), (5,3), (5,6), (3,1)]
+*Main>  [a+b | (a,b) <- xs]
+[4,7,6,8,11,4]
+```
+
+> Note: The x:xs pattern is used a lot, especially with recursive functions. But patterns that have : in them only match against lists of length 1 or more.
+
+
+## Home made `head`
+
+```hs
+{- 
+head' :: [a] -> a  
+head' [] = error "Can't call head on an empty list, dummy!"  
+head' (x:_) = x 
+-}
+
+head' :: [a] -> a  
+head' xs = case xs of [] -> error "No head for empty lists!"  
+                      (x:_) -> x  
+
+```
+
+Let's make a trivial function that tells us some of the first elements of the list in (in)convenient English form.
+
+
+## Home made length'
+
+We already implemented our own length function using list comprehension. Now we'll do it by using pattern matching and a little recursion:
+
+```hs
+length' :: (Num b) => [a] -> b  
+length' [] = 0  
+length' (_:xs) = 1 + length' xs  
+```
+
+## Guards
+
+
+## Where
+
+## Let it be
+Let bindings let you bind to variables anywhere and are expressions themselves, but are very local, so they don't span across guards. 
+
+So what's the difference between the two?
+For now it just seems that let puts the bindings first and the expression that uses them later whereas where is the other way around.
+
+```hs
+ghci> 4 * (let a = 9 in a + 1) + 2  
+42  
+
+ghci> [let square x = x * x in (square 5, square 3, square 2)]  
+[(25,9,4)] 
+
+*Main> let sq x = x * x in (sq 5, sq 3, sq 2)
+(25,9,4)
+
+*Main> let a = 3; b = 4; c = 5 in product [a,b,c]
+60
+
+*Main> let (a,b,c) = (3,4,5) in product [a,b,c]
+60
+```
+
+Return only the BMIs for FAT people
+
+```hs
+*Main> [bmi | bmi <- calcBmis [(60, 1.68), (70, 1.60)], bmi >= 25.0]
+[27.343749999999996]
+```
+
+We omitted the in part of the `let` binding when we used them in list comprehensions because the visibility of the names is already predefined there. However, we could use a `let in` binding in a predicate and the names defined would only be visible to that predicate. The `in` part can also be omitted when defining functions and constants directly in GHCi. **If we do that, then the names will be visible throughout the entire interactive session.**
+
+## case expressions
+
+```hs
+case expression of pattern -> result  
+                   pattern -> result  
+                   pattern -> result  
+                   ...  
+```                   
