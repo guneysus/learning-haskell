@@ -734,4 +734,33 @@ case expression of pattern -> result
                    pattern -> result  
                    pattern -> result  
                    ...  
-```                   
+```
+
+
+## recursion
+
+```hs
+maximum' :: (Ord a) => [a] -> a  
+maximum' [] = error "maximum of empty list"  
+maximum' [x] = x  
+maximum' (x:xs)   
+    | x > maxTail = x  
+    | otherwise = maxTail  
+    where maxTail = maximum' xs  
+```
+
+
+```hs
+repeat 3          -- Infinite list
+take 5 (repeat 3) -- Finite list
+
+
+*Main> zip' [1,2] ['a', 'b']
+[(1,'a'),(2,'b')]
+
+*Main> quicksort [10,2,5,3,1,6,7,4,2,3,4,8,9]
+[1,2,2,3,3,4,4,5,6,7,8,9,10]
+*Main> quicksort "the quick brown fox jumps over the lazy dog"
+"        abcdeeefghhijklmnoooopqrrsttuuvwxyz"
+
+```
