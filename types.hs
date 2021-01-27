@@ -1,6 +1,6 @@
 data Bool = True | False;
 
-data Shape = Circle Float Float Float | Rectangle Float Float Float Float
+data Shape = Circle Float Float Float | Rectangle Float Float Float Float deriving (Show)
 
 
 surface :: Shape -> Float
