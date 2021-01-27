@@ -958,3 +958,14 @@ oddSquareSum =
     in  sum belowLimit
 
 ```
+
+
+## types
+
+```hs
+ghci> surface $ Circle 10 20 10  
+314.15927  
+
+ghci> surface $ Rectangle 0 0 100 100  
+10000.0 
+```
