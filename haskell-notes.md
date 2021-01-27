@@ -963,9 +963,32 @@ oddSquareSum =
 ## types
 
 ```hs
-ghci> surface $ Circle 10 20 10  
-314.15927  
+ghci> surface $ Circle 10 20 10
+314.15927
 
-ghci> surface $ Rectangle 0 0 100 100  
-10000.0 
+ghci> surface $ Rectangle 0 0 100 100
+10000.0
 ```
+
+Value constructors are functions, so we can map them and partially apply them and everything.
+If we want a list of concentric circles with different radii, we can do this.
+
+```hs
+ghci> surface (Rectangle (Point 0 0) (Point 100 100))
+10000.0
+
+ghci> surface (Circle (Point 0 0) 24)
+1809.5574
+```
+
+
+How about a function that nudges a shape? It takes a shape, the amount to move it on the x axis and the amount to move it on the y axis and then returns a new shape that has the same dimensions, only it's located somewhere else.
+
+```hs
+nudge :: Shape -> Float -> Float -> Shape
+nudge (Circle (Point x y) r) a b = Circle (Point (x+a) (y+b)) r
+nudge (Rectangle (Point x1 y1) (Point x2 y2)) a b = Rectangle (Point (x1+a) (y1+b)) (Point (x2+a) (y2+b))
+```
+
+
+
