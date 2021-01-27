@@ -6,9 +6,9 @@
 λ sort "ahmed"
 λ (30, "ahmed")
 λ [42,13,21]
-λ (1,"hats",23/35) 
+λ (1,"hats",23/35)
 λ ("Shaggy","Daphnie","Velma")
-λ fst (28,"chirs") 
+λ fst (28,"chirs")
 λ let x = 4 in x * x
 λ let x = 8 * 10 in x + x
 λ let villain = (28,"chirs") in fst villain
@@ -56,26 +56,26 @@
 
 ```haskell
 5 * (-3)
-λ True && False  
-λ False || True  
-λ not False  
-λ not (True && True)  
-λ 1 == 0  
-λ 5 /= 4  
-λ succ 8  
+λ True && False
+λ False || True
+λ not False
+λ not (True && True)
+λ 1 == 0
+λ 5 /= 4
+λ succ 8
 λ succ 'a'
-λ min 9 10  
-λ min 3.4 3.2  
-max 100 101  
+λ min 9 10
+λ min 3.4 3.2
+max 100 101
 λ succ 9 + max 5 4 + 1
-λ (succ 9) + (max 5 4) + 1  
+λ (succ 9) + (max 5 4) + 1
 λ div 10 2
 λ 10 `div` 2
-λ doubleMe x = x + x  
+λ doubleMe x = x + x
 λ doubleMe 10
 λ doubleMe 2.2
 λ :l baby
-λ doubleUs x y = doubleMe x + doubleMe y   
+λ doubleUs x y = doubleMe x + doubleMe y
 ```
 
 Function application (calling a function by putting a space after it and then typing out the parameters) has the highest precedence of them all. What that means for us is that these two statements are equivalent.
@@ -84,28 +84,28 @@ The difference between Haskell's if statement and if statements in imperative la
 
 
 ```haskell
-doubleSmallNumber' x = (if x > 100 then x else x*2) + 1  
-λ conanO'Brien = "It's a-me, Conan O'Brien!"   
+doubleSmallNumber' x = (if x > 100 then x else x*2) + 1
+λ conanO'Brien = "It's a-me, Conan O'Brien!"
 ```
 
-Functions can't begin with uppercase letters. 
+Functions can't begin with uppercase letters.
 
-When a function doesn't take any parameters, we usually say it's a definition (or a name). 
+When a function doesn't take any parameters, we usually say it's a definition (or a name).
 
 ## An intro to lists
 
 ```hs
-λ let lostNumbers = [4,8,15,16,23,42]  
-λ [1,2,3,4] ++ [9,10,11,12]  
-λ "hello" ++ " " ++ "world"  
-λ ['w','o'] ++ ['o','t']  
+λ let lostNumbers = [4,8,15,16,23,42]
+λ [1,2,3,4] ++ [9,10,11,12]
+λ "hello" ++ " " ++ "world"
+λ ['w','o'] ++ ['o','t']
 ```
 
 When you put together two lists (even if you append a singleton list to a list, for instance: `[1,2,3] ++ [4])`, internally, Haskell has to walk through the whole list on the left side of ++. That's not a problem when dealing with lists that aren't too big. But putting something at the end of a list that's fifty million entries long is going to take a while. However, putting something at the beginning of a list using the `:` operator (also called the cons operator) is instantaneous.
 
 ```hs
-λ 'A':" SMALL CAT"  
-λ "A" ++ " SMALL CAT"  
+λ 'A':" SMALL CAT"
+λ "A" ++ " SMALL CAT"
 ```
 
 Notice how `:` takes a number and a list of numbers or a character and a list of characters, whereas `++` takes two lists. Even if you're adding an element to the end of a list with `++,` you have to surround it with square brackets so it becomes a list.
@@ -114,9 +114,9 @@ Notice how `:` takes a number and a list of numbers or a character and a list of
 
 ```hs
 λ "Steve Buscemi" !! 6
-λ [9.4,33.2,96.2,11.2,23.25] !! 1 
-λ let b = [[1,2,3,4],[5,3,3,3],[1,2,2,3,4],[1,2,3]] 
-λ [3,2,1] > [2,1,0]  
+λ [9.4,33.2,96.2,11.2,23.25] !! 1
+λ let b = [[1,2,3,4],[5,3,3,3],[1,2,2,3,4],[1,2,3]]
+λ [3,2,1] > [2,1,0]
 
 λ [3,2,1] > [2,1,1]
 True
@@ -131,23 +131,23 @@ True
 λ init [5,4,3,2,1]
 [5,4,3,2]
 
-λ head []  
+λ head []
 *** Exception: Prelude.head: empty list
 
-λ length [5,4,3,2,1] 
+λ length [5,4,3,2,1]
 
-λ null [1,2,3]  
+λ null [1,2,3]
 False
 
-λ null []  
+λ null []
 True
 
-λ reverse [5,4,3,2,1]  
+λ reverse [5,4,3,2,1]
 
-λ take 3 [5,4,3,2,1]  
+λ take 3 [5,4,3,2,1]
 [5,4,3]
 
-λ 3 `take` [5,4,3,2,1]  
+λ 3 `take` [5,4,3,2,1]
 [5,4,3]
 
 ```
@@ -157,32 +157,32 @@ True
 `null` checks if a list is empty. If it is, it returns `True`, otherwise it returns `False`. Use this function instead of `xs == []` (if you have a list called xs)
 
 ```hs
-λ take 0 [1,2]  
+λ take 0 [1,2]
 []
 
-λ take 5 [1,2]  
+λ take 5 [1,2]
 [1,2]
 
-λ drop 3 [8,4,2,1,5,6]  
+λ drop 3 [8,4,2,1,5,6]
 [1,5,6]
 
 λ drop 100 [1,2,3,4]
 []
 
 
-λ minimum [8,4,2,1,5,6]  
+λ minimum [8,4,2,1,5,6]
 1
 
-λ maximum [1,9,2,3,4]  
+λ maximum [1,9,2,3,4]
 9
 
-λ sum [5,2,1,6,3,2,5,7]  
+λ sum [5,2,1,6,3,2,5,7]
 31
 
-λ product [6,2,1,2]  
+λ product [6,2,1,2]
 24
 
-λ product [1,2,5,6,7,9,2,0]  
+λ product [1,2,5,6,7,9,2,0]
 0
 
 ```
@@ -190,7 +190,7 @@ True
 `elem` takes a thing and a list of things and tells us if that thing is an element of the list. It's usually called as an infix function because it's easier to read that way.
 
 ```hs
-λ 4 `elem` [3,4,5,6]  
+λ 4 `elem` [3,4,5,6]
 True
 
 ```
@@ -202,16 +202,16 @@ True
 λ [1..20]
 [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20
 
-λ ['a'..'z']  
+λ ['a'..'z']
 "abcdefghijklmnopqrstuvwxyz"
 
-λ ['K'..'Z']  
+λ ['K'..'Z']
 "KLMNOPQRSTUVWXYZ"
 
 λ [2,4..20]
 [2,4,6,8,10,12,14,16,18,20]
 
-λ [3,6..20] 
+λ [3,6..20]
 [3,6,9,12,15,18]
 ```
 
@@ -238,10 +238,10 @@ You can also use ranges to make infinite lists by just not specifying an upper l
 `cycle` takes a list and cycles it into an infinite list. If you just try to display the result, it will go on forever so you have to slice it off somewhere.
 
 ```hs
-λ take 10 (cycle [1,2,3])  
+λ take 10 (cycle [1,2,3])
 [1,2,3,1,2,3,1,2,3,1]
 
-λ take 12 (cycle "Vay ")  
+λ take 12 (cycle "Vay ")
 "Vay Vay Vay "
 ```
 
@@ -249,22 +249,22 @@ You can also use ranges to make infinite lists by just not specifying an upper l
 `repeat` takes an element and produces an infinite list of just that element. It's like cycling a list with only one element.
 
 ```hs
-λ take 3 (repeat 5)  
+λ take 3 (repeat 5)
 [5,5,5]
 
-λ take 3 (repeat [])  
+λ take 3 (repeat [])
 [[],[],[]]
 
-λ take 3 (repeat [3])  
+λ take 3 (repeat [3])
 [[3],[3],[3]]
 
-λ take 3 (repeat (1,'a') )  
+λ take 3 (repeat (1,'a') )
 [(1,'a'),(1,'a'),(1,'a')]
 
-λ replicate 3 10 
+λ replicate 3 10
 [10,10,10]
 
-λ 3 `replicate` 10 
+λ 3 `replicate` 10
 [10,10,10]
 ```
 
@@ -274,15 +274,15 @@ You can also use ranges to make infinite lists by just not specifying an upper l
 λ [x*x | x <- [1..10]]
 [1,4,9,16,25,36,49,64,81,100]
 
-λ [x*x | x <- [1..10], x*x >= 20]  
+λ [x*x | x <- [1..10], x*x >= 20]
 [25,36,49,64,81,100]
 
 λ [ x | x <- [50..100], x `mod` 7 == 0]
 [56,63,70,77,84,91,98]
 
-λ boomBangs xs = [ if x < 10 then "BOOM!" else "BANG!" | x <- xs, odd x]   
+λ boomBangs xs = [ if x < 10 then "BOOM!" else "BANG!" | x <- xs, odd x]
 
-λ boomBangs [7..13]  
+λ boomBangs [7..13]
 ["BOOM!","BOOM!","BANG!","BANG!"]
 
 λ [ x | x <- [0..100], even x, x `mod` 3 == 0 ]
@@ -291,9 +291,9 @@ You can also use ranges to make infinite lists by just not specifying an upper l
 
 λ let nouns = ["koc", "aslan", "boga", "kartal"]
 λ let adjectives = ["oturan", "ucan", "korkak", "yuzen"]
-λ [adjective ++ " " ++ noun | adjective <- adjectives, noun <- nouns]  
+λ [adjective ++ " " ++ noun | adjective <- adjectives, noun <- nouns]
 ["oturan koc","oturan aslan","oturan boga","oturan kartal","ucan koc","ucan aslan","ucan boga","ucan kartal","korkak koc","korkak aslan","korkak boga","korkak kartal","yuzen koc","yuzen aslan","yuzen boga","yuzen kartal"]
-λ random [adjective ++ " " ++ noun | adjective <- adjectives, noun <- nouns]  
+λ random [adjective ++ " " ++ noun | adjective <- adjectives, noun <- nouns]
 
 ```
 
@@ -301,16 +301,16 @@ You can also use ranges to make infinite lists by just not specifying an upper l
 I know! Let's write our own version of `length`! We'll call it `length'`.
 
 ```hs
-λ length' xs = sum [1 | _ <- xs]   
+λ length' xs = sum [1 | _ <- xs]
 λ length' [x | x <- [0..100], even x, x `mod` 3 == 0]
 17
 
-λ removeNonUppercase st = [ c | c <- st, c `elem` ['A'..'Z']]   
-λ removeNonUppercase "Hahaha! Ahahaha!"  
+λ removeNonUppercase st = [ c | c <- st, c `elem` ['A'..'Z']]
+λ removeNonUppercase "Hahaha! Ahahaha!"
 "HA"
 
 λ removeUppercase st = [ c | c <- st, not (c `elem` ['A'..'Z'])]
-λ removeUppercase "Hahaha! Ahahaha!"  
+λ removeUppercase "Hahaha! Ahahaha!"
 "ahaha! hahaha!"
 
 ```
@@ -318,36 +318,36 @@ I know! Let's write our own version of `length`! We'll call it `length'`.
 ## Tuples
 
 ```hs
-ghci> fst (8,11)  
-8  
+ghci> fst (8,11)
+8
 
-ghci> fst ("Wow", False)  
+ghci> fst ("Wow", False)
 "Wow"
 
-ghci> snd (8,11)  
-11  
+ghci> snd (8,11)
+11
 
-ghci> snd ("Wow", False)  
-False  
+ghci> snd ("Wow", False)
+False
 
-ghci> zip [1,2,3,4,5] [5,5,5,5,5]  
-[(1,5),(2,5),(3,5),(4,5),(5,5)]  
+ghci> zip [1,2,3,4,5] [5,5,5,5,5]
+[(1,5),(2,5),(3,5),(4,5),(5,5)]
 
-ghci> zip [1 .. 5] ["one", "two", "three", "four", "five"]  
-[(1,"one"),(2,"two"),(3,"three"),(4,"four"),(5,"five")]  
+ghci> zip [1 .. 5] ["one", "two", "three", "four", "five"]
+[(1,"one"),(2,"two"),(3,"three"),(4,"four"),(5,"five")]
 
 
-ghci> zip [5,3,2,6,2,7,2,5,4,6,6] ["im","a","turtle"]  
-[(5,"im"),(3,"a"),(2,"turtle")]  
+ghci> zip [5,3,2,6,2,7,2,5,4,6,6] ["im","a","turtle"]
+[(5,"im"),(3,"a"),(2,"turtle")]
 
 ```
 
-The longer list simply gets cut off to match the length of the shorter one. 
+The longer list simply gets cut off to match the length of the shorter one.
 
 Because Haskell is lazy, we can zip finite lists with infinite lists:
 
 ```hs
-ghci> zip [1..] ["apple", "orange", "cherry", "mango"]  
+ghci> zip [1..] ["apple", "orange", "cherry", "mango"]
 ```
 
 Here's a problem that combines tuples and list comprehensions: which right triangle that has integers for all sides and all sides equal to or smaller than 10 has a perimeter of 24? First, let's try generating all triangles with sides equal to or smaller than 10:
@@ -355,9 +355,9 @@ Here's a problem that combines tuples and list comprehensions: which right trian
 
 
 ```hs
-λ let triangles = [ (a,b,c) | c <- [1..10], b <- [1..10], a <- [1..10] ]   
-λ let rightTriangles = [ (a,b,c) | c <- [1..10], b <- [1..c], a <- [1..b], a^2 + b^2 == c^2]   
-λ let rightTriangles' = [ (a,b,c) | c <- [1..10], b <- [1..c], a <- [1..b], a^2 + b^2 == c^2, a+b+c == 24] 
+λ let triangles = [ (a,b,c) | c <- [1..10], b <- [1..10], a <- [1..10] ]
+λ let rightTriangles = [ (a,b,c) | c <- [1..10], b <- [1..c], a <- [1..b], a^2 + b^2 == c^2]
+λ let rightTriangles' = [ (a,b,c) | c <- [1..10], b <- [1..c], a <- [1..b], a^2 + b^2 == c^2, a+b+c == 24]
 λ rightTriangles'
 [(6,8,10)]
 ```
@@ -369,14 +369,14 @@ Here's a problem that combines tuples and list comprehensions: which right trian
 λ :t "Ahmed"
 "Ahmed" :: [Char]
 
-addThree :: Int -> Int -> Int -> Int  
-addThree x y z = x + y + z  
+addThree :: Int -> Int -> Int -> Int
+addThree x y z = x + y + z
 
-factorial :: Integer -> Integer  
-factorial n = product [1..n] 
+factorial :: Integer -> Integer
+factorial n = product [1..n]
 
-circumference :: Float -> Float  
-circumference r = 2 * pi * r  
+circumference :: Float -> Float
+circumference r = 2 * pi * r
 ```
 
 
@@ -387,8 +387,8 @@ Prelude> :t (==)
 (==) :: Eq a => a -> a -> Bool
 ```
 
-Interesting. We see a new thing here, the `=>` symbol. Everything before the `=>` symbol is called a class constraint. 
-We can read the previous type declaration like this: **the equality function takes any two values that are of the same type and returns a `Bool`**. 
+Interesting. We see a new thing here, the `=>` symbol. Everything before the `=>` symbol is called a class constraint.
+We can read the previous type declaration like this: **the equality function takes any two values that are of the same type and returns a `Bool`**.
 **The type of those two values must be a member of the `Eq` class** (this was the class constraint).
 
 The `Eq` typeclass *provides an interface for testing for equality*. Any type where it makes sense to test for equality between two values of that type should be a member of the Eq class. **All standard Haskell types except for IO and functions are a part of the Eq typeclass.**
@@ -629,28 +629,28 @@ Note that if we moved the last pattern (the catch-all one) to the top, it would 
 ## Pattern Matching on Tuples
 
 ```hs
-addVectors :: (Num a) => (a, a) -> (a, a) -> (a, a)  
-addVectors a b = (fst a + fst b, snd a + snd b)  
+addVectors :: (Num a) => (a, a) -> (a, a) -> (a, a)
+addVectors a b = (fst a + fst b, snd a + snd b)
 ```
 
 Better way:
 
 ```hs
-addVectors :: (Num a) => (a, a) -> (a, a) -> (a, a)  
-addVectors (x1, y1) (x2, y2) = (x1 + x2, y1 + y2)  
+addVectors :: (Num a) => (a, a) -> (a, a) -> (a, a)
+addVectors (x1, y1) (x2, y2) = (x1 + x2, y1 + y2)
 ```
 
 `fst` and `snd` extract the components of pairs. But what about triples? Well, there are no provided functions that do that but we can make our own.
 
 ```hs
-first :: (a, b, c) -> a  
-first (x, _, _) = x  
-  
-second :: (a, b, c) -> b  
-second (_, y, _) = y  
-  
-third :: (a, b, c) -> c  
-third (_, _, z) = z  
+first :: (a, b, c) -> a
+first (x, _, _) = x
+
+second :: (a, b, c) -> b
+second (_, y, _) = y
+
+third :: (a, b, c) -> c
+third (_, _, z) = z
 ```
 
 ```hs
@@ -665,15 +665,15 @@ third (_, _, z) = z
 ## Home made `head`
 
 ```hs
-{- 
-head' :: [a] -> a  
-head' [] = error "Can't call head on an empty list, dummy!"  
-head' (x:_) = x 
+{-
+head' :: [a] -> a
+head' [] = error "Can't call head on an empty list, dummy!"
+head' (x:_) = x
 -}
 
-head' :: [a] -> a  
-head' xs = case xs of [] -> error "No head for empty lists!"  
-                      (x:_) -> x  
+head' :: [a] -> a
+head' xs = case xs of [] -> error "No head for empty lists!"
+                      (x:_) -> x
 
 ```
 
@@ -685,9 +685,9 @@ Let's make a trivial function that tells us some of the first elements of the li
 We already implemented our own length function using list comprehension. Now we'll do it by using pattern matching and a little recursion:
 
 ```hs
-length' :: (Num b) => [a] -> b  
-length' [] = 0  
-length' (_:xs) = 1 + length' xs  
+length' :: (Num b) => [a] -> b
+length' [] = 0
+length' (_:xs) = 1 + length' xs
 ```
 
 ## Guards
@@ -696,17 +696,17 @@ length' (_:xs) = 1 + length' xs
 ## Where
 
 ## Let it be
-Let bindings let you bind to variables anywhere and are expressions themselves, but are very local, so they don't span across guards. 
+Let bindings let you bind to variables anywhere and are expressions themselves, but are very local, so they don't span across guards.
 
 So what's the difference between the two?
 For now it just seems that let puts the bindings first and the expression that uses them later whereas where is the other way around.
 
 ```hs
-ghci> 4 * (let a = 9 in a + 1) + 2  
-42  
+ghci> 4 * (let a = 9 in a + 1) + 2
+42
 
-ghci> [let square x = x * x in (square 5, square 3, square 2)]  
-[(25,9,4)] 
+ghci> [let square x = x * x in (square 5, square 3, square 2)]
+[(25,9,4)]
 
 *Main> let sq x = x * x in (sq 5, sq 3, sq 2)
 (25,9,4)
@@ -730,23 +730,23 @@ We omitted the in part of the `let` binding when we used them in list comprehens
 ## case expressions
 
 ```hs
-case expression of pattern -> result  
-                   pattern -> result  
-                   pattern -> result  
-                   ...  
+case expression of pattern -> result
+                   pattern -> result
+                   pattern -> result
+                   ...
 ```
 
 
 ## recursion
 
 ```hs
-maximum' :: (Ord a) => [a] -> a  
-maximum' [] = error "maximum of empty list"  
-maximum' [x] = x  
-maximum' (x:xs)   
-    | x > maxTail = x  
-    | otherwise = maxTail  
-    where maxTail = maximum' xs  
+maximum' :: (Ord a) => [a] -> a
+maximum' [] = error "maximum of empty list"
+maximum' [x] = x
+maximum' (x:xs)
+    | x > maxTail = x
+    | otherwise = maxTail
+    where maxTail = maximum' xs
 ```
 
 
@@ -762,5 +762,199 @@ take 5 (repeat 3) -- Finite list
 [1,2,2,3,3,4,4,5,6,7,8,9,10]
 *Main> quicksort "the quick brown fox jumps over the lazy dog"
 "        abcdeeefghhijklmnoooopqrrsttuuvwxyz"
+
+```
+
+## Higher Order Functions
+
+```hs
+Prelude> :t max
+max :: Ord a => a -> a -> a
+
+Prelude> :t max 4
+max 4 :: (Num a, Ord a) => a -> a
+
+Prelude> :t max 4 5
+max 4 5 :: (Num a, Ord a) => a
+
+Prelude> :t max 4 5 6
+max 4 5 6 :: (Num (t -> t1), Num t, Ord (t -> t1)) => t1
+
+Prelude> :t max 4 5 6 7
+max 4 5 6 7 :: (Num (t1 -> t -> t2), Num t, Num t1, Ord (t1 -> t -> t2)) => t
+
+```
+
+```hs
+
+ghci> let multTwoWith9 = multThree 9
+ghci> multTwoWith9 2 3
+54
+
+*Main> let multWith18 = multTwoWith9 2
+*Main> multWith18 10
+180
+
+
+```
+
+Calling, say, `divideByTen 200` is equivalent to doing `200 / 10`, as is doing `(/10) 200`.
+
+## Some higher-orderism is in order
+
+
+```hs
+*Main> applyTwice (square) 3
+81
+
+*Main> applyTwice (*2) 10
+40
+
+*Main> :t (:[])
+(:[]) :: a ->
+
+*Main> applyTwice (3:) []
+[3,3]
+
+*Main> applyTwice (3:) [1]
+[3,3,1]
+
+
+*Main> zipWith' (-) [4,2,5,6] [2,6,2,3]
+[2,-4,3,3]
+
+ghci> zipWith' max [6,3,2,1] [7,3,1,5]
+[7,3,2,5]
+
+ghci> zipWith' (++) ["foo ", "bar ", "baz "] ["fighters", "hoppers", "aldrin"]
+["foo fighters","bar hoppers","baz aldrin"]
+
+ghci> zipWith' (*) (replicate 5 2) [1..]
+[2,4,6,8,10]
+
+```
+
+## flip
+
+Flip simply takes a function and returns a function that is like our original function, only the first two arguments are flipped.
+
+
+```hs
+*Main> replicate 5 2
+[2,2,2,2,2]
+*Main> flip replicate 5 2
+[5,5]
+
+*Main> flip' zip [1,2,3,4,5] "hello"
+[('h',1),('e',2),('l',3),('l',4),('o',5)]
+
+```
+
+## folds
+
+`\acc x -> x : acc` kind of looks like the `:` function, only the parameters are flipped. That's why we could have also written our reverse as foldl `(flip (:)) []`.
+
+
+### scans
+
+```hs
+*Main> foldl1  (+) [1..5]
+15
+*Main> scanl1 (+) [1..5]
+[1,3,6,10,15]
+```
+
+## Function application with `$`
+
+Function application with a space is left-associative (so `f a b c` is the same as `((f a) b) c))`, function application with $ is right-associative.
+
+Consider, `sum (map sqrt [1..130])`,  Because `$` has such a low precedence, we can rewrite that expression as `sum $ map sqrt [1..130]`
+
+> When a `$` is encountered, the expression on its right is applied as the parameter to the function on its left.
+
+
+```hs
+*Main> sqrt 9+16
+19.0 -- !!
+
+*Main> sqrt (9+16)
+5.0
+
+*Main> sqrt $ 9 + 16
+5.0
+
+*Main> sqrt $ (+) 9 16
+5.0
+
+
+*Main> sum $ filter (> 10) $ map (*2) [2..10]
+80
+
+*Main> sum (filter (> 10) (map (*2) [2..10]))
+80
+]
+```
+
+
+But apart from getting rid of parentheses, `$` means that function application can be treated just like another function. That way, we can, for instance, map function application over a list of functions.
+
+```hs
+*Main> map ($ 5) [(*2), (*3), (^2)]
+[10,15,25]
+```
+
+
+## Function composition
+
+![](http://s3.amazonaws.com/lyah/composition.png)
+
+
+```hs
+*Main> :t (.)
+(.) :: (b -> c) -> (a -> b) -> a -> c
+
+f . g = \x -> f (g x)
+
+
+*Main> :t (negate . (^10))
+(negate . (^10)) :: Num c => c -> c
+
+*Main> negate . (^2) $ 10
+-100
+
+*Main> map (\x -> negate (abs x)) [5,-3,-6,7,-3,2,-19,24]
+[-5,-3,-6,-7,-3,-2,-19,-24]
+
+*Main> map (negate . abs) [5,-3,-6,7,-3,2,-19,24]
+[-5,-3,-6,-7,-3,-2,-19,-24]
+
+```
+
+> Function composition is right-associative.
+
+
+Another common use of function composition is defining functions in the so-called point free style (also called the pointless style). Take for example this function that we wrote earlier:
+
+```hs
+fn x = ceiling (negate (tan (cos (max (pi/180) x))))
+
+fn x = ceiling $ negate $ tan $ cos $ max (pi/180) x
+fn   = ceiling . negate . tan . cos . max (pi/180)
+```
+
+
+```hs
+oddSquareSum :: Integer
+oddSquareSum = sum (takeWhile (<10000) (filter odd (map (^2) [1..])))
+
+oddSquareSum :: Integer
+oddSquareSum = sum . takeWhile (<10000) . filter odd . map (^2) $ [1..]
+
+
+oddSquareSum :: Integer
+oddSquareSum =
+    let oddSquares = filter odd $ map (^2) [1..]
+        belowLimit = takeWhile (<10000) oddSquares
+    in  sum belowLimit
 
 ```
