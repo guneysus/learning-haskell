@@ -992,3 +992,77 @@ nudge (Rectangle (Point x1 y1) (Point x2 y2)) a b = Rectangle (Point (x1+a) (y1+
 
 
 
+## Making own Types
+
+```hs
+ghci> let stang = Car {company="Ford", model="Mustang", year=1967}
+ghci> tellCar stang
+"This Ford Mustang was made in 1967"
+```
+
+If we were defining a mapping type, we could add a typeclass constraint in the data declaration:
+
+```hs
+data (Ord k) => Map k v = ...
+```
+
+However, it's a very strong convention in Haskell to
+
+> (…) never add typeclass constraints in data declarations.
+
+ if we don't put the constraint in the data declaration, we don't have to put (Ord k) => in the type declarations of functions that don't care whether the keys can be ordered or not.
+
+```hs
+type AssocList k v = [(k,v)]
+```
+
+### Lockers
+```hs
+:l locker-state
+
+ghci> lockerLookup 101 lockers
+Right "JAH3I"
+ghci> lockerLookup 100 lockers
+Left "Locker 100 is already taken!"
+ghci> lockerLookup 102 lockers
+Left "Locker number 102 doesn't exist!"
+ghci> lockerLookup 110 lockers
+Left "Locker 110 is already taken!"
+ghci> lockerLookup 105 lockers
+Right "QOTSA"
+```
+
+
+
+## Recursive data structures
+
+```hs
+data List a = Empty | Cons a (List a) deriving (Show, Read, Eq, Ord)
+-- data List a = Empty | Cons { listHead :: a, listTail :: List a} deriving (Show, Read, Eq, Ord)
+
+ghci> Empty
+Empty
+ghci> 5 `Cons` Empty
+Cons 5 Empty
+ghci> 4 `Cons` (5 `Cons` Empty)
+Cons 4 (Cons 5 Empty)
+ghci> 3 `Cons` (4 `Cons` (5 `Cons` Empty))
+Cons 3 (Cons 4 (Cons 5 Empty))
+```
+
+We can define functions to be automatically infix by making them comprised of only special characters. We can also do the same with constructors, since they're just functions that return a data type. So check this out.
+
+```hs
+infixr 5 :-:
+data List a = Empty | a :-: (List a) deriving (Show, Read, Eq, Ord)
+```
+
+```hs
+:l infix.hs
+ghci> let a = 3 :-: 4 :-: 5 :-: Empty
+ghci> let b = 6 :-: 7 :-: Empty
+ghci> a .++ b
+(:-:) 3 ((:-:) 4 ((:-:) 5 ((:-:) 6 ((:-:) 7 Empty))))
+```
+
+### Binary Search Tree
