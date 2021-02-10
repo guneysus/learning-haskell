@@ -1066,3 +1066,29 @@ ghci> a .++ b
 ```
 
 ### Binary Search Tree
+
+
+## Yes-No Type Class
+
+Huh? What's `id?` It's just a standard library function that takes a parameter and returns the same thing, which is what we would be writing here anyway.
+
+```hs
+ghci> yesno $ length []  
+False  
+ghci> yesno "haha"  
+True  
+ghci> yesno ""  
+False  
+ghci> yesno $ Just 0  
+True  
+ghci> yesno True  
+True  
+ghci> yesno EmptyTree  
+False  
+ghci> yesno []  
+False  
+ghci> yesno [0,0,0]  
+True  
+ghci> :t yesno  
+yesno :: (YesNo a) => a -> Bool  
+```
